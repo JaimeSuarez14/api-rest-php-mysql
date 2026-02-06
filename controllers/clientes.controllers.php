@@ -1,8 +1,8 @@
 <?php 
 class ClientesControllers {
-  public function create(){
-    $json = array("detalle" => "Estas en el api de clientes");
-    echo json_encode($json, true);
+  public function create($datos){
+    //$json = ClienteModel::create($datos);
+    echo json_encode($datos, true);
   }
 }
 

@@ -2,8 +2,8 @@
 class CursosControllers {
   public function index(){
     $json = CursosModel::getAll();
-    //echo json_encode($json, true);
-    return $json;
+    echo json_encode($json, true);
+    return;
   }
 
   public function create() {

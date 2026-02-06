@@ -58,7 +58,12 @@ if (count(array_filter($arrayRutas)) == 0) {
       case 'POST':
         $the_request = &$_POST;
         $clientes = new ClientesControllers();
-        $clientes->create();
+        $data= array(
+          "nombre" => $the_request["nombre"],
+          "email" => $the_request["email"],
+          "telefono" => $the_request["telefono"]
+        );
+        $clientes->create($data);
         break;
 
       default:
