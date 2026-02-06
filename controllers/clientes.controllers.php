@@ -14,6 +14,12 @@ class ClientesControllers {
       return;
     }
 
+    if(ClienteModel::validarEmailRepetido($datos["email"])){
+      $json = array("detalle" => "Email repetido, por favor ingrese otro");
+      echo json_encode($json, true);
+      return;
+    }
+
     if(!preg_match("/^[0-9]+$/", $datos["telefono"]) || strlen($datos["telefono"]) != 9){
       $json = array("detalle" => "Telefono no valido");
       echo json_encode($json, true);
