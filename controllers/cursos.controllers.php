@@ -1,8 +1,9 @@
 <?php 
 class CursosControllers {
   public function index(){
-    $json = array("detalle" => "Estas en el api de cursos");
-    echo json_encode($json, true);
+    $json = CursosModel::getAll();
+    //echo json_encode($json, true);
+    return $json;
   }
 
   public function create() {

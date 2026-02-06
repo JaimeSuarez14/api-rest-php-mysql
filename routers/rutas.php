@@ -13,7 +13,7 @@ if (count(array_filter($arrayRutas)) == 0) {
     switch ($_SERVER['REQUEST_METHOD']) {
       case 'GET':
         //ruta /cursos/123
-        if( $arrayRutas[2] && is_numeric(array_filter($arrayRutas)[2])) {
+        if( isset($arrayRutas[2] ) && is_numeric(array_filter($arrayRutas)[2])) {
           $cursos = new CursosControllers();
           $cursos->showCurso(array_filter($arrayRutas)[2]);
         }else {

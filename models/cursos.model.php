@@ -4,7 +4,7 @@ require_once "conection.php";
 
 class CursosModel {
 
-  public function getAll(){
+  static public function getAll(){
     $link = Conexion::conectar();
     $query = $link->prepare("SELECT * FROM cursos");
     $query->execute();
