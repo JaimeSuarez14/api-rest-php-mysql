@@ -17,10 +17,20 @@ class ClienteModel
 
   static public function create($datos)
   {
+
+    /*Estas son las columnas de la tabla:
+    id
+    primer_nombre
+    primer_apellido
+    email
+    id_cliente
+    llave_secreta */
+
+
     $link = Conexion::conectar();
-    $query = $link->prepare("INSERT INTO clientes (nombre, apellido, email, telefono) VALUES (:nombre, :apellido, :email, :telefono)");
-    $query->bindParam(":nombre", $datos["nombre"]);
-    $query->bindParam(":apellido", $datos["apellido"]);
+    $query = $link->prepare("INSERT INTO clientes (primer_nombre, primer_apellido, email, id_cliente,llave_secreta ) VALUES (:primer_nombre, :primer_apellido, :email, :id_cliente,:llave_secreta)");
+    $query->bindParam(":primer_nombre", $datos["primer_nombre"]);
+    $query->bindParam(":primer_apellido", $datos["primer_apellido"]);
     $query->bindParam(":email", $datos["email"]);
     $query->bindParam(":telefono", $datos["telefono"]);
     if ($query->execute()) {
