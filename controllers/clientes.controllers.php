@@ -47,7 +47,12 @@ class ClientesControllers
     $datos["id_cliente"] = $id_cliente;
     $datos["llave_secreta"] = $llave_secreta;
 
-    //$json = ClienteModel::create($datos);
-    echo json_encode($datos, true);
+    $result = ClienteModel::create($datos);
+    if ($result) {
+      $json = array("detalle" => "Cliente creado con exito", "id_cliente" => $id_cliente, "llave_secreta" => $llave_secreta);
+    } else {
+      $json = array("detalle" => "Error al crear el cliente");
+    }
+    echo json_encode($json, true);
   }
 }

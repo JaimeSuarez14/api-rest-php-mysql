@@ -15,33 +15,30 @@ class ClienteModel
     $link = null;
   }
 
-  static public function create($datos)
-  {
+  static public function create($datos) {
+    try {
+        $link = Conexion::conectar();
+        $query = $link->prepare("INSERT INTO clientes (primer_nombre, primer_apellido, email, id_cliente, llave_secreta) VALUES (:primer_nombre, :primer_apellido, :email, :id_cliente, :llave_secreta)");
+        
+        $query->bindParam(":primer_nombre", $datos["nombre"]);
+        $query->bindParam(":primer_apellido", $datos["apellido"]);
+        $query->bindParam(":email", $datos["email"]);
+        $query->bindParam(":id_cliente", $datos["id_cliente"]);
+        $query->bindParam(":llave_secreta", $datos["llave_secreta"]);
 
-    /*Estas son las columnas de la tabla:
-    id
-    primer_nombre
-    primer_apellido
-    email
-    id_cliente
-    llave_secreta */
+        $inserted = $query->execute(); //esta linea sirve para ejecutar la consulta
+        $count = $query->rowCount(); //esta otra linea sirve para contar las filas afectadas por la consulta
+        $query->closeCursor(); //aca se cierra 
+        return $inserted && $count > 0;  //devuelve el booleano
 
-
-    $link = Conexion::conectar();
-    $query = $link->prepare("INSERT INTO clientes (primer_nombre, primer_apellido, email, id_cliente,llave_secreta ) VALUES (:primer_nombre, :primer_apellido, :email, :id_cliente,:llave_secreta)");
-    $query->bindParam(":primer_nombre", $datos["primer_nombre"]);
-    $query->bindParam(":primer_apellido", $datos["primer_apellido"]);
-    $query->bindParam(":email", $datos["email"]);
-    $query->bindParam(":telefono", $datos["telefono"]);
-    if ($query->execute()) {
-      return "ok";
-    } else {
-      return "error";
+    } catch (PDOException $e) {
+        // Manejo de error
+        error_log("Error en la inserción: " . $e->getMessage());
+        return false;
+    } finally {
+        $link = null; // Cierra la conexión
     }
-    $query->close();
-    $link = null;
-  }
-
+}
   static public function validarEmailRepetido($email)
   {
     $link = Conexion::conectar();
